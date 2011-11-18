@@ -1,0 +1,10 @@
+== GlobalContentelements ==
+
+Erweitert die Contao tl_content Tabelle mit einem "Source"-Feld. Damit gehört ein Inhaltselement
+nicht zwangsweise einem Artikel an. Man kann damit in eigenen Erweiterungen tl_content als Child-Table
+verwenden und alle Inhaltselemente nutzen.
+
+Beispiel News4ward:
+* Der DCA von tl_news4ward_article setzt als ctable tl_content ein.
+* Wenn der _GET-Parameter "do" news4ward enthält, also den Modulnamen, wird in tl_content die ptable auf tl_news4ward_article gesetzt.
+* Jetzt können in NewsArtikel alle installierten Inhaltselemente genutzt werden.
