@@ -49,7 +49,7 @@ class GlobalContentElements extends System
 		$reload = false;
 
 		// only for tl_content table or child-table
-		if($strTable != 'tl_content' && !in_array('tl_content',$ctable)) return $reload;
+		if($strTable != 'tl_content' && is_array($ctable) && !in_array('tl_content',$ctable)) return $reload;
 
 		$this->import('Database');
 
