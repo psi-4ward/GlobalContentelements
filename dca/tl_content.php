@@ -17,6 +17,17 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = array('Globa
 $GLOBALS['TL_DCA']['tl_content']['list']['sorting']['filter'] = array(array('do=?',$this->Input->get('do')));
 
 
+// unset checkPermission from tl_content if we are not in the article-tree
+if($this->Input->get('do') != 'article')
+{
+	foreach($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $k => $v)
+	{
+		if($v[0] == 'tl_content' && $v[1] == 'checkPermission')
+			unset($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][$k]);
+	}
+}
+
+
 /**
  * You have to set the ptable of tl_content according your
  * modules ptable:
@@ -25,6 +36,12 @@ if($this->Input->get('do') == 'mymodule')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_mymodule_article';
 }
+*/
+
+/**
+ * Probably set your own checkPermission function
+
+$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_mymodule', 'checkPermission');
 */
 
 
