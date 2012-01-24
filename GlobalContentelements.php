@@ -18,7 +18,41 @@ class GlobalContentElements extends System
 {
 
 	/**
+	 * Construct the class
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('Database');
+	}
+
+
+	/**
 	 * Callback to save the modules name in the tl_content.do row
+	 * if a entry gets copied
+	 * @param int $insertID
+	 * @return void
+	 */
+	public function copyCallback($insertID)
+	{
+		$this->Database->prepare("UPDATE tl_content SET do=? WHERE id=?")->execute($this->Input->get('do'),$insertID);
+	}
+
+	/**
+	 * Callback to save the modules name in the tl_content.do row
+	 * if a entry gets cutted
+	 * @param DataContainer $dc
+	 * @return void
+	 */
+	public function cutCallback($dc)
+	{
+		$this->Database->prepare("UPDATE tl_content SET do=? WHERE id=?")->execute($this->Input->get('do'),$dc->id);
+	}
+
+
+	/**
+	 * Callback to save the modules name in the tl_content.do row
+	 * also wors for the cut_callback
 	 * @param DataContainer $dc
 	 * @return void
 	 */
@@ -29,7 +63,6 @@ class GlobalContentElements extends System
 		{
 			return;
 		}
-		$this->import('Database');
 		$this->Database->prepare("UPDATE tl_content SET do=? WHERE id=?")->execute($this->Input->get('do'),$dc->id);
 	}
 
@@ -50,8 +83,6 @@ class GlobalContentElements extends System
 
 		// only for tl_content table or child-table
 		if($strTable != 'tl_content' && is_array($ctable) && !in_array('tl_content',$ctable)) return $reload;
-
-		$this->import('Database');
 
 		// Delete all records of the current table that are not related to the parent table
 		if (strlen($ptable))
@@ -97,7 +128,7 @@ class GlobalContentElements extends System
 		return $reload;
 	}
 
-	
+
 	/**
 	 * Handle database update
 	 * its a callback, executed within install-tool
@@ -106,7 +137,6 @@ class GlobalContentElements extends System
 	 */
 	public function sqlCompileCommands($arrData)
 	{
-		$this->import('Database');
 		$objCnt = $this->Database->execute('SELECT count(*) as anz FROM tl_content WHERE do=""');
 		if($objCnt->anz > 0)
 		{
