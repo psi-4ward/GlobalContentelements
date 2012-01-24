@@ -96,6 +96,24 @@ class GlobalContentElements extends System
 		$ptable = $ctable = '';
 		return $reload;
 	}
+
+	
+	/**
+	 * Handle database update
+	 * its a callback, executed within install-tool
+	 * @param array $arrData SQL-Statements
+	 * @return array SQL-Statements
+	 */
+	public function sqlCompileCommands($arrData)
+	{
+		$this->import('Database');
+		$objCnt = $this->Database->execute('SELECT count(*) as anz FROM tl_content WHERE do=""');
+		if($objCnt->anz > 0)
+		{
+			$arrData['ALTER_CHANGE'][] = 'UPDATE `tl_content` SET `do`="article" WHERE `do`="";';
+		}
+		return $arrData;
+	}
 }
 
 ?>

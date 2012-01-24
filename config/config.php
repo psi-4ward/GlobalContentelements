@@ -12,6 +12,10 @@
 // Register Callback to prevent deleting the wrong CEs
 $GLOBALS['TL_HOOKS']['reviseTable'][] = array('GlobalContentelements','reviseTable');
 
+// Hook for updateDatabase to populate tl_content.do with "article"
+$GLOBALS['TL_HOOKS']['sqlCompileCommands'][] = array('GlobalContentelements','sqlCompileCommands');
+
+
 // Load the modified ModuleArticle class to prevent
 // the classloader to load the Contao-Core ModuleArticle class
 if(TL_MODE == 'FE')
