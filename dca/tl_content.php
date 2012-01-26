@@ -47,4 +47,4 @@ if($this->Input->get('do') == 'mymodule')
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_mymodule', 'checkPermission');
 */
 
-
+?>
