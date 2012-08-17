@@ -77,7 +77,7 @@ class GlobalContentElements extends System
 	 * @param array $ctable
 	 * @return bool
 	 */
-	public function reviseTable($strTable, $new_records,&$ptable,&$ctable)
+	public function reviseTable($strTable, $new_records, &$ptable, &$ctable)
 	{
 		$reload = false;
 
