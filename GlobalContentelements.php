@@ -68,6 +68,29 @@ class GlobalContentElements extends System
 
 
 	/**
+	 *
+	 */
+	public function loadDataContainer($strName)
+	{
+		if ($strName == 'tl_article')
+		{
+			if ($this->Input->get('act') == 'delete' ||
+				$this->Input->get('act') == 'deleteAll')
+			{
+				// remove tl_content from ctable
+				foreach ($GLOBALS['TL_DCA']['tl_article']['config']['ctable'] as $k => $v)
+				{
+					if ($v == 'tl_content')
+					{
+						unset($GLOBALS['TL_DCA']['tl_article']['config']['ctable'][$k]);
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * Callback to preserve the tl_content entities which belongs
 	 * to other modules
 	 *
