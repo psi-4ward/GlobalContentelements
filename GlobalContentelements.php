@@ -68,7 +68,10 @@ class GlobalContentElements extends System
 
 
 	/**
+	 * Callback to preserve the tl_content entities which belongs
+	 * to other modules
 	 *
+	 * @param string $strName
 	 */
 	public function loadDataContainer($strName)
 	{
