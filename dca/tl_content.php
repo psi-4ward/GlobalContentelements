@@ -13,6 +13,10 @@
 // Register submit callback to save the modules name in tl_content.do
 $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = array('GlobalContentelements','setDo');
 
+// prevent deleting wrong records (childs from ptable)
+$GLOBALS['TL_DCA']['tl_content']['config']['doNotDeleteRecords'] = true;
+$GLOBALS['TL_DCA']['tl_content']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
+
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = array('GlobalContentelements','copyCallback');
 $GLOBALS['TL_DCA']['tl_content']['config']['oncut_callback'][] = array('GlobalContentelements','cutCallback');
 
@@ -39,12 +43,13 @@ if($this->Input->get('do') == 'mymodule')
 {
 	$GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_mymodule_article';
 }
-*/
 
-/**
  * Probably set your own checkPermission function
 
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_mymodule', 'checkPermission');
+
+ * And dont forget to set our ondelete_callback to delete the child-records from tl_content
+$GLOBALS['TL_DCA']['tl_MYTABLE']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
 */
 
 ?>

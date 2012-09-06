@@ -144,6 +144,25 @@ class GlobalContentElements extends System
 		}
 		return $arrData;
 	}
-}
 
-?>
+
+	/**
+	 * Delete child-records from tl_content
+	 *
+	 * @param DataContainer $dc
+	 */
+	public function deleteChildRecords(DataContainer $dc)
+	{
+		$objChilds = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do=?')
+									->execute($dc->id,$this->Input->get('do'));
+
+		while($objChilds->next())
+		{
+			$this->Input->setGet('id',$objChilds->id);
+			$dc = new DC_Table('tl_content');
+			$dc->delete(true);
+		}
+		$this->Input->setGet('id',$dc->id);
+	}
+
+}
