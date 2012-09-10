@@ -10,6 +10,9 @@
  */
 
 // Register Callback to prevent deleting the wrong CEs
+$GLOBALS['TL_HOOKS']['loadDataContainer'][] = array('GlobalContentelements','loadDataContainer');
+
+// Register Callback to prevent deleting the wrong CEs
 $GLOBALS['TL_HOOKS']['reviseTable'][] = array('GlobalContentelements','reviseTable');
 
 // Hook for updateDatabase to populate tl_content.do with "article"
