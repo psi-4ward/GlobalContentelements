@@ -23,4 +23,3 @@ if(TL_MODE == 'FE')
 	require_once(TL_ROOT.'/system/modules/GlobalContentelements/ModuleArticle.php');
 }
 
-?>

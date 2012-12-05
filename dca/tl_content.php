@@ -1,4 +1,4 @@
-<?php  if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php if(!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 /**
  * GlobalContentelements
@@ -15,8 +15,11 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = array('Globa
 
 // prevent deleting wrong records (childs from ptable)
 $GLOBALS['TL_DCA']['tl_content']['config']['doNotDeleteRecords'] = true;
-$GLOBALS['TL_DCA']['tl_content']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
 
+// delete tl_content records when deleting a tl_article
+$GLOBALS['TL_DCA']['tl_article']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
+
+// set do parameter when copy/cut an content-element
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = array('GlobalContentelements','copyCallback');
 $GLOBALS['TL_DCA']['tl_content']['config']['oncut_callback'][] = array('GlobalContentelements','cutCallback');
 
@@ -24,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_content']['config']['oncut_callback'][] = array('GlobalCo
 $GLOBALS['TL_DCA']['tl_content']['list']['sorting']['filter'] = array(array('do=?',$this->Input->get('do')));
 
 
-// unset checkPermission from tl_content if we are not in the article-tree
+// unset checkPermission from class tl_content if we are not in the article-tree
 if($this->Input->get('do') != 'article')
 {
 	foreach($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $k => $v)
@@ -52,4 +55,3 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_cont
 $GLOBALS['TL_DCA']['tl_MYTABLE']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
 */
 
-?>

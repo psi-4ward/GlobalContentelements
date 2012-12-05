@@ -150,11 +150,19 @@ class GlobalContentElements extends System
 	 * Delete child-records from tl_content
 	 *
 	 * @param DataContainer $dc
+	 * @throws Exception
+	 * @return void
 	 */
 	public function deleteChildRecords(DataContainer $dc)
 	{
+		// only valid if tl_content is a ctable for $dc->table (the table which ondelete_callback executs this function)
+		if($dc->table == 'tl_content' || !in_array('tl_content',$GLOBALS['TL_DCA'][$dc->table]['config']['ctable']))
+		{
+			throw new Exception("{$dc->table} has not tl_content as ctable!");
+		}
+
 		$objChilds = $this->Database->prepare('SELECT id FROM tl_content WHERE pid=? AND do=?')
-									->execute($dc->id,$this->Input->get('do'));
+									->execute($dc->id, $this->Input->get('do'));
 
 		while($objChilds->next())
 		{
