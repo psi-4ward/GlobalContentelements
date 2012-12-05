@@ -77,7 +77,7 @@ class GlobalContentElements extends System
 	 * @param array $ctable
 	 * @return bool
 	 */
-	public function reviseTable($strTable, $new_records,&$ptable,&$ctable)
+	public function reviseTable($strTable, $new_records, &$ptable, &$ctable)
 	{
 		$reload = false;
 
@@ -85,9 +85,9 @@ class GlobalContentElements extends System
 		if($strTable != 'tl_content' && is_array($ctable) && !in_array('tl_content',$ctable)) return $reload;
 
 		// Delete all records of the current table that are not related to the parent table
-		if (strlen($ptable))
+		if ($ptable != '')
 		{
-			$objStmt = $this->Database->execute
+			$objStmt = $this->Database->query
 			("
 				DELETE FROM " . $strTable . "
 				WHERE
@@ -102,23 +102,20 @@ class GlobalContentElements extends System
 		}
 
 		// Delete all records of the child table that are not related to the current table
-		if (is_array($ctable) && count($ctable))
+		if (is_array($ctable))
 		{
-			foreach ($ctable as $v)
+			foreach (array_filter($ctable) as $v)
 			{
-				if (strlen($v))
+				$objStmt = $this->Database->query
+				("
+					DELETE FROM " . $v . "
+					WHERE
+						NOT EXISTS (SELECT * FROM " . $strTable . " WHERE " . $v . ".pid = " . $strTable . ".id)"
+						.(($v == 'tl_content') ? " AND do='".$this->Input->get('do')."'" : '' )
+				);
+				if ($objStmt->affectedRows > 0)
 				{
-					$objStmt = $this->Database->execute
-					("
-						DELETE FROM " . $v . "
-						WHERE
-							NOT EXISTS (SELECT * FROM " . $strTable . " WHERE " . $v . ".pid = " . $strTable . ".id)"
-							.(($v == 'tl_content') ? " AND do='".$this->Input->get('do')."'" : '' )
-					);
-					if ($objStmt->affectedRows > 0)
-					{
-						$reload = true;
-					}
+					$reload = true;
 				}
 			}
 		}
