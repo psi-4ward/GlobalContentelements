@@ -16,9 +16,6 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = array('Globa
 // prevent deleting wrong records (childs from ptable)
 $GLOBALS['TL_DCA']['tl_content']['config']['doNotDeleteRecords'] = true;
 
-// delete tl_content records when deleting a tl_article
-$GLOBALS['TL_DCA']['tl_article']['config']['ondelete_callback'][] = array('GlobalContentelements','deleteChildRecords');
-
 // set do parameter when copy/cut an content-element
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = array('GlobalContentelements','copyCallback');
 $GLOBALS['TL_DCA']['tl_content']['config']['oncut_callback'][] = array('GlobalContentelements','cutCallback');
