@@ -24,6 +24,10 @@ UPDATE tl_content SET ptable='tl_news4ward_article' WHERE do='news4ward';
 ### if you use boxes4ward:
 UPDATE tl_content SET ptable='tl_boxes4ward_article' WHERE do='boxes4ward';
 
+### if you use fahrzeugmanager:
+UPDATE tl_content SET ptable='tl_fahrzeugmanager_config_vehicle_layouts' WHERE do='fahrzeugmanager_config_vehicle_layouts';
+UPDATE tl_content SET ptable='tl_fahrzeugmanager_config_filter_layouts' WHERE do='fahrzeugmanager_config_filter_layouts';
+
 if the ptable row dosnt already exists, create it with
 ALTER TABLE tl_content ADD ptable VARCHAR(64) NOT NULL default '';
 EOERR;
